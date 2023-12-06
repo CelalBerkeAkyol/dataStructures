@@ -1,0 +1,124 @@
+// Stack using array in c 
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+	int data;
+	struct node* next;
+};
+
+struct node* createNode(int x)
+{
+	struct node* yeni = (struct node*)malloc(sizeof(struct node));
+	yeni->next = NULL;
+	yeni->data = x;
+	return yeni;
+}
+
+void printNode(struct node* head)
+{
+	struct node* tmp;
+	tmp = head;
+	while (tmp != NULL)
+	{
+		printf("%d\n", tmp->data); 
+		tmp = tmp->next;
+	}
+}
+
+//void basaEkle(struct node* head, struct node* yeni)
+//{
+//	yeni -> next = head;
+//	head = yeni;
+//}
+
+void basaEkle(struct node** head, int x)
+{
+	struct node* yeni = createNode(x);
+	yeni->next = *head;
+	*head = yeni;
+}
+
+void sonaEkle(struct node* head, int x)
+{
+	struct node* yeni = createNode(x);
+	struct node* tmp;
+	tmp = head;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = yeni;
+}
+
+void arayaEkle(struct node* head, int x, int y)
+{
+	struct node* yeni = createNode(x);
+	struct node* tmp = head;
+	while (tmp->data != y)
+	{
+		tmp = tmp->next;
+	}
+	yeni->next = tmp->next;
+	tmp->next = yeni;
+}
+void bastanSil(struct node** head)
+{
+	struct node* tmp = *head;
+	*head = tmp->next;
+	free(tmp);
+}
+void aradanSil(struct node* head, int x)
+{
+	struct node* tmp = head;
+	struct node* tmp2;
+	while (tmp->next->data != x)
+		tmp = tmp->next;
+	tmp2 = tmp->next;
+	tmp->next = tmp->next->next;
+	free(tmp2);
+}
+void sondanSil(struct node* head)
+{
+	struct node* tmp = head;
+	while (tmp->next->next != NULL)
+		tmp = tmp->next;
+	free(tmp->next);
+	tmp->next =NULL;
+	
+}
+void tersCevir(struct node** head)
+{
+	struct node* tmp, * tmp2, * tmp3;
+	tmp = *head;
+	tmp2 = NULL;
+	while (tmp != NULL)
+	{
+		tmp3 = tmp2;
+		tmp2 = tmp;
+		tmp = tmp->next;
+		tmp2->next = tmp3;
+		*head = tmp2;
+	}
+}
+
+
+
+int main(void) {
+	//	struct node* dugum0 = createNode(0);
+	struct node* dugum1 = createNode(5);
+	struct node* dugum2 = createNode(10);
+	struct node* dugum3 = createNode(20);
+	dugum1->next = dugum2;
+	dugum2->next = dugum3;
+	//basaEkle(&dugum1, 0);
+	//sonaEkle(dugum1, 30);
+	//arayaEkle(dugum1, 15, 10);
+	
+	bastanSil(&dugum1);
+	//aradanSil(dugum1, 10);
+	//sondanSil(dugum1);
+
+	//tersCevir(&dugum1);
+
+	printNode(dugum1);
+
+}
