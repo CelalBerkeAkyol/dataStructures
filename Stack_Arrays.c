@@ -62,9 +62,10 @@ bool isFull()
 
     }
 }
+
 void push()
 {
-    if (isFull)
+    if (top == MAX - 1) // isFull fonks parametre olarak verdiğimde stack boşken stack dolu uyarısı veriyor bunun sebebini açıklar mısınız ? 
     {
         printf("Stack overflow \n");
         return;
