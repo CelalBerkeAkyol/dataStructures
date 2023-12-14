@@ -10,20 +10,29 @@ struct node
 } *top = NULL;
 
 // fonksiyonlar
-void push()
+struct node *createNode()
 {
     struct node *newNode = (struct node *)malloc(sizeof(struct node));
     printf("Eklemek istediğiniz değer nedir ? ");
-    int data = 0;
-    scanf("%d", &data);
-    newNode->data = data;
-    newNode->next = NULL;
-    // top elementin güncellenmesi burada yapılıyor
-    newNode->next = top;
-    top = newNode;
+    int userİnput;
+    scanf("%d", &userİnput);
+    newNode->data = userİnput;
+    newNode->next = NULL; // yeni düğüm tanımlandı
+    return newNode;
+}
+void push()
+{
+    struct node *newNodeForPush = createNode(); // bu fonksiyonu kullanmak acaba doğru bir karar mı ? Yoksa bellekte fazladan bir yer mi kaplıyor ? Acaba bu fonk kullanmak yerine direkt kodları buraya yazmak daha mı mantıklı olur ?
+    newNodeForPush->next = top;
+    top = newNodeForPush;
 }
 void pop()
 {
+    if (top == NULL)
+    {
+        printf("Stack is empty. Cannot pop.\n");
+        return;
+    }
     struct node *tmp = top;
     int value = tmp->data;
     top = top->next;
@@ -33,15 +42,23 @@ void pop()
 }
 void show()
 {
+    if (top == NULL)
+    {
+        printf("Stack is empty.\n");
+        return;
+    }
     struct node *ptr = top;
 
-    while (ptr !=NULL)
+    while (ptr != NULL)
     {
         printf("%d\n", ptr->data);
-    ptr = ptr->next;
+        ptr = ptr->next;
     }
-    
-    
+}
+// En son değer gösterilir
+void peek()
+{
+    printf("Son değer = %d \n", top->data);
 }
 int main()
 {
@@ -50,10 +67,13 @@ int main()
     {
 
         printf("Aşağıdaki şıklardan birini seçiniz.");
-        printf("\n [1] = Yeni eleman ekle \n [2] = eleman sil \n [3] = elemanları yazdır \n [4] = Programı sonlandır\n");
+        printf("\n [0] = Programı sonlandır \n [1] = Yeni eleman ekle \n [2] = eleman sil \n [3] = elemanları yazdır \n [4] = Son elemanı görüntüle \n \n");
         scanf("%d", &choose);
         switch (choose)
         {
+        case 0:
+            exit(1);
+            break;
         case 1:
             push();
             break;
@@ -64,7 +84,7 @@ int main()
             show();
             break;
         case 4:
-            exit(1);
+            peek();
             break;
 
         default:
