@@ -7,7 +7,7 @@ int top = TOP_EMPTY;
 int stack_array[MAX];
 int data; // silinen değeri saklayan değişken
 // fonksiyon tanımları
-bool isFull();
+int isFull();
 void push();
 int pop();
 void peek();
@@ -49,23 +49,16 @@ int main()
         }
     }
 }
-bool isFull()
+int isFull()
 {
-    if (top == MAX - 1)
-    {
-        printf("Stack dolu");
-        return true;
-    }
-    else{
-        printf("Stack boş");
-                return false;
+    return (top == MAX-1); // top max -1 eşitse stack doludur ve 1 değeri döndürülür 
 
-    }
+    
 }
 
 void push()
 {
-    if (top == MAX - 1) // isFull fonks parametre olarak verdiğimde stack boşken stack dolu uyarısı veriyor bunun sebebini açıklar mısınız ? 
+    if (isFull) 
     {
         printf("Stack overflow \n");
         return;
